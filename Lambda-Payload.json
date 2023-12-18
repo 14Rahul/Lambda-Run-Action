@@ -1,0 +1,41 @@
+{
+  "ldap_access": [
+    {
+      "instances": [
+        "i-0840face1e2565fbd"
+      ],
+      "key": "",
+      "value": "",
+      "permissions": [
+        {
+          "ad_group": "Devops",
+          "m_user": "ALL"
+        }
+      ],
+      "regions": [
+        "ap-southeast-1"
+      ]
+    },
+    {
+      "instances": [
+        "i-03a70d483dcfdff6f",
+        "i-0bb68372296681c06"
+      ],
+      "key": "",
+      "value": "",
+      "permissions": [
+        {
+          "ad_group": "Devops",
+          "m_user": "ALL"
+        },
+        {
+          "ad_group": "Apps",
+          "m_user": "deploy"
+        }
+      ],
+      "regions": [
+        "ap-south-1"
+      ]
+    }
+  ]
+}
