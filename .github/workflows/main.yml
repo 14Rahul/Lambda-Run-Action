@@ -1,27 +1,22 @@
-name: Run Lambda with Payload
+name: Update user permissions on EC2
 on:
   push:
     branches:
-      - Lambda-CICD
+      - master
+    paths:
+      - 'Devops-Automation/Ec2-Access-Control/lambda-payload.json'
 jobs:
-  sync:
+  UpdatePermissions:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.7'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install awscli
-      - name: Configure AWS credentials from Test account
+      - uses: actions/checkout@v3
+      - name: Assume AWS IAM Role
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::532968567499:role/Lambda-Action-Role
           aws-region: us-east-2
-      - run: aws lambda invoke --function-name OhLambdaLdapAccessConfig --payload fileb:///home/runner/work/aws-code/aws-code/Lambda-CICD/lambda-payload.json --region us-east-2 outfile.txt
-      - run: cat outfile.txt
+      - name: Invoke lambda with new Permissions
+        run: aws lambda invoke --function-name OhLambdaLdapAccessConfig --cli-read-timeout 0 --payload fileb:///home/runner/work/aws-code/aws-code/Devops-Automation/Ec2-Access-Control/lambda-payload.json --region us-east-2 outfile.txt
